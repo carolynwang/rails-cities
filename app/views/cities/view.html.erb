@@ -1,0 +1,66 @@
+<div align="center">
+    <h1>CITY INFO</h1>
+    <h1>🌇 🏙 🌉 🌃 🌆</h1>
+    <%= form_with local: true, method: "get" do |form| %>
+        Search for a specific city: <%= form.text_field :city %>
+    	<%= form.submit "Go"%>
+    <% end %>
+    <% if @city != nil && @city != "" %>
+        <% if $cities[@city.to_sym] != nil %>
+            <h3><%= $cities[@city.to_sym].name %></h3>
+            <p>---------------------------------</p>
+            <p>POPULATION: <%= $cities[@city.to_sym].population %></p>
+            <p>LANDMARK: <%= $cities[@city.to_sym].landmark %></p>
+            <p>TEMPERATURE: <%= ((9 / 5) * ($cities[@city.to_sym].weather[:temperature] - 273) + 32).round(1) %> °F</p>
+        <% else %>
+            This city doesn't exist!
+            <br>
+        <% end %>
+        <br>
+        <%= form_with local: true, method: "get" do |form| %>
+        	<%= form.submit "Show all" %>
+        <% end %>
+        <br>
+    <% else %>
+        <% if $cities != {} %>
+            <% @cities = $cities.keys %>
+            <% @cities.each do |city| %>
+                <h3><%= $cities[city.to_sym].name %></h3>
+                <p>---------------------------------</p>
+                <p><b>POPULATION: </b><%= $cities[city.to_sym].population %></p>
+                <p><b>LANDMARK: </b><%= $cities[city.to_sym].landmark %></p>
+                <p><b>TEMPERATURE: </b><%= ((9 / 5) * ($cities[city.to_sym].weather[:temperature] - 273) + 32).round(1) %> °F</p>
+                <br>
+            <% end %>
+        <% else %>
+            <h3>There are no cities!</h3>
+            <%= form_with local: true, method: "get", url: "new" do |form| %>
+            	<%= form.submit "Click to create a new city" %>
+            <% end %>
+            <br>
+        <% end %>
+    <% end %>
+    --------------------------------------------
+    <br>
+    <br>
+    <%= form_with local: true, method: "get", url: "update" do |form| %>
+    	<%= form.submit "Update a city" %>
+    <% end %>
+    <br>
+    <% if $cities != {} %>
+        <%= form_with local: true, method: "get", url: "new" do |form| %>
+        	<%= form.submit "Add a city" %>
+        <% end %>
+    <% end %>
+    <br>
+    <% if $cities != {} %>
+        <%= form_with local: true, method: "get", url: "delete" do |form| %>
+        	<%= form.submit "Delete a city" %>
+        <% end %>
+    <% end %>
+    <br>
+    <p>⭑ ⭑ ⭑</p>
+    <%= form_with local: true, method: "post", url: "main" do |form| %>
+    	<%= form.submit "Return to main page" %>
+    <% end %>
+</div>

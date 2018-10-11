@@ -1,0 +1,16 @@
+<div align="center">
+    <h1>DELETE A CITY</h1>
+    <h1>🚧 🎡 🎢 ⛲️ 🏜 🌋</h1>
+    <%= form_with local: true, method: "post", url: "postDelete" do |form| %>
+        City: <%= form.text_field :name %>
+    	<%= form.submit "Delete" %>
+    <% end %>
+    <br>
+    <%= form_with local: true, method: "get", url: "view" do |form| %>
+    	<%= form.submit "Cancel" %>
+    <% end %>
+    <p>⭑ ⭑ ⭑</p>
+    <%= form_with local: true, method: "post", url: "main" do |form| %>
+    	<%= form.submit "Return to main page" %>
+    <% end %>
+</div>
