@@ -8,25 +8,25 @@
     <% end %>
     <br>
     <% if not @city.nil? %>
-        <% if not City.all[@city.to_sym].nil? %>
-            <h2> <%= City.all[@city.to_sym].name %></h2>
+        <% if not City.all[@city.downcase.to_sym].nil? %>
+            <h2> <%= City.all[@city.downcase.to_sym].name %></h2>
             <p>
-                <%temperature = City.all[@city.to_sym].weather[:temperature]%>
+                <%temperature = City.all[@city.downcase.to_sym].weather[:temperature]%>
                 <%temperature = ((9 / 5) * temperature - 273) + 32%>
                 It's <%= temperature.round(1) %>°F
-                and it looks like <%= City.all[@city.to_sym].weather[:description] %>
+                and it looks like <%= City.all[@city.downcase.to_sym].weather[:description] %>
             </p>
         <% else %>
             <p>That city doesn't exist! </p>
         <% end %>
     <% else %>
         <% City.all.keys.each do |c| %>
-        	<h2> <%= City.all[c.to_sym].name %></h2>
+        	<h2> <%= City.all[c.downcase.to_sym].name %></h2>
         	<p>
-                <%temperature = City.all[c.to_sym].weather[:temperature]%>
+                <%temperature = City.all[c.downcase.to_sym].weather[:temperature]%>
                 <%temperature = ((9 / 5) * temperature - 273) + 32%>
         		It's <%= temperature.round(1) %>°F
-        		and it looks like <%= City.all[c.to_sym].weather[:description] %>
+        		and it looks like <%= City.all[c.downcase.to_sym].weather[:description] %>
         	</p>
         <% end %>
     <% end %>

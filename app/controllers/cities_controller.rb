@@ -14,8 +14,13 @@ class CitiesController < ApplicationController
   end
 
   def create
-      if City.all.key?(params[:name].to_sym) != true
-          @city_params = {name: params[:name], landmark: params[:landmark], population: params[:population]}
+      if City.all.key?(params[:name].downcase.to_sym) != true
+          if ('A'..'Z').include? params[:name][0]
+              @city_params = {name: params[:name], landmark: params[:landmark], population: params[:population]}
+          else
+              name = params[:name].slice(0,1).capitalize + params[:name].slice(1..-1)
+              @city_params = {name: name, landmark: params[:landmark], population: params[:population]}
+          end
           @newCity = City.new(@city_params)
           @newCity.save
       end
@@ -23,7 +28,7 @@ class CitiesController < ApplicationController
   end
 
   def postUpdate
-      @city = $cities[params[:name].to_sym]
+      @city = $cities[params[:name].downcase.to_sym]
       if @city != nil
           @city.update({name: params[:name], landmark: params[:landmark], population: params[:population]})
           @city.save
@@ -32,8 +37,8 @@ class CitiesController < ApplicationController
   end
 
   def postDelete
-      if City.all.key?(params[:name].to_sym)
-          City.all.delete(params[:name].to_sym)
+      if City.all.key?(params[:name].downcase.to_sym)
+          City.all.delete(params[:name].downcase.to_sym)
       end
       redirect_to '/cities/view'
   end

@@ -10,7 +10,7 @@ class City
 	end
 
 	def save
-		$cities[@name.to_sym] = self
+		$cities[@name.downcase.to_sym] = self
 	end
 
 	def self.all

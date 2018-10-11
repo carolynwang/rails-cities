@@ -6,13 +6,14 @@
     	<%= form.submit "Go"%>
     <% end %>
     <% if @city != nil && @city != "" %>
-        <% if $cities[@city.to_sym] != nil %>
-            <h3><%= $cities[@city.to_sym].name %></h3>
+        <% if $cities[@city.downcase.to_sym] != nil %>
+            <h3><%= $cities[@city.downcase.to_sym].name %></h3>
             <p>---------------------------------</p>
-            <p>POPULATION: <%= $cities[@city.to_sym].population %></p>
-            <p>LANDMARK: <%= $cities[@city.to_sym].landmark %></p>
-            <p>TEMPERATURE: <%= ((9 / 5) * ($cities[@city.to_sym].weather[:temperature] - 273) + 32).round(1) %> °F</p>
+            <p><b>POPULATION: </b><%= $cities[@city.downcase.to_sym].population %></p>
+            <p><b>LANDMARK: </b><%= $cities[@city.downcase.to_sym].landmark %></p>
+            <p><b>TEMPERATURE: </b><%= ((9 / 5) * ($cities[@city.downcase.to_sym].weather[:temperature] - 273) + 32).round(1) %> °F</p>
         <% else %>
+            <br>
             This city doesn't exist!
             <br>
         <% end %>
@@ -25,11 +26,11 @@
         <% if $cities != {} %>
             <% @cities = $cities.keys %>
             <% @cities.each do |city| %>
-                <h3><%= $cities[city.to_sym].name %></h3>
+                <h3><%= $cities[city.downcase.to_sym].name %></h3>
                 <p>---------------------------------</p>
-                <p><b>POPULATION: </b><%= $cities[city.to_sym].population %></p>
-                <p><b>LANDMARK: </b><%= $cities[city.to_sym].landmark %></p>
-                <p><b>TEMPERATURE: </b><%= ((9 / 5) * ($cities[city.to_sym].weather[:temperature] - 273) + 32).round(1) %> °F</p>
+                <p><b>POPULATION: </b><%= $cities[city.downcase.to_sym].population %></p>
+                <p><b>LANDMARK: </b><%= $cities[city.downcase.to_sym].landmark %></p>
+                <p><b>TEMPERATURE: </b><%= ((9 / 5) * ($cities[city.downcase.to_sym].weather[:temperature] - 273) + 32).round(1) %> °F</p>
                 <br>
             <% end %>
         <% else %>
