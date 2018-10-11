@@ -1,2 +1,49 @@
 <!-- Your code here -->
-<h1>Hello World!</h1>
+<div align="center">
+    <h1>WHAT'S THE WEATHER?</h1>
+    <h1>☀️ 🌤 ⛅️ ☁️ 🌦 🌧 ⛈ 🌩 🌨</h1>
+    <%= form_with local: true, method: "get" do |form| %>
+        Search for the weather for a specific city: <%= form.text_field :city %>
+    	<%= form.submit "Go"%>
+    <% end %>
+    <br>
+    <% if not @city.nil? %>
+        <% if not City.all[@city.to_sym].nil? %>
+            <h2> <%= City.all[@city.to_sym].name %></h2>
+            <p>
+                <%temperature = City.all[@city.to_sym].weather[:temperature]%>
+                <%temperature = ((9 / 5) * temperature - 273) + 32%>
+                It's <%= temperature.round(1) %>°F
+                and it looks like <%= City.all[@city.to_sym].weather[:description] %>
+            </p>
+        <% else %>
+            <p>That city doesn't exist! </p>
+        <% end %>
+    <% else %>
+        <% City.all.keys.each do |c| %>
+        	<h2> <%= City.all[c.to_sym].name %></h2>
+        	<p>
+                <%temperature = City.all[c.to_sym].weather[:temperature]%>
+                <%temperature = ((9 / 5) * temperature - 273) + 32%>
+        		It's <%= temperature.round(1) %>°F
+        		and it looks like <%= City.all[c.to_sym].weather[:description] %>
+        	</p>
+        <% end %>
+    <% end %>
+    <br>
+    <%= form_with local: true, method: "get", url: 'cities/new' do |form| %>
+    	<%= form.submit "Add city"%>
+    <% end %>
+    <br>
+    <%= form_with local: true, method: "get" do |form| %>
+    	<%= form.submit "Show all"%>
+    <% end %>
+    <br>
+    ------------------------------------------------------------------------
+    <%= form_with local: true, method: "get", url: 'cities/view' do |form| %>
+        <p>Actually, I want to know the population and landmark for this city too:</p>
+        <%= form.text_field :city %>
+        <p>(leave field empty you want to view all the cities)</p>
+    	<%= form.submit "Go"%>
+    <% end %>
+</div>
